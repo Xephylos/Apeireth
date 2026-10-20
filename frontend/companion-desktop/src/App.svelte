@@ -56,7 +56,6 @@
   import BridgeLayer from './lib/bridge/BridgeLayer.svelte';
   import DeepCabinLayer from './lib/cabin/DeepCabinLayer.svelte';
   import IntroLayer from './lib/intro/IntroLayer.svelte';
-  import VideoSplashLayer from './lib/intro/VideoSplashLayer.svelte';
   import {localClockHour} from './lib/scene/timeline';
   import SessionListHome from './lib/chat-shell/SessionListHome.svelte';
   import PendingDocumentDock from './lib/chat-shell/PendingDocumentDock.svelte';
@@ -252,28 +251,6 @@
     window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   // 封存期：仅显式强制参数才播（reduced-motion 仍有最终否决权）
   let introPlaying = $state(introForced && !introReduceMotion);
-
-  // ---------- 视频片头门卫（AI 生成 WebM/MP4）----------
-  // 素材位 public/splash/apeireth-splash.mp4(.webm)；缺失时组件零副作用直通（不闪屏）。
-  // 首启动播放一次（ap-splash-seen），?splash=1 强制重播；reduced-motion 保留最终否决权。
-  const splashForced = introQuery?.get('splash') === '1';
-  const splashFirstRun = (() => {
-    try {
-      return localStorage.getItem('ap-splash-seen') !== '1';
-    } catch {
-      return false;
-    }
-  })();
-  let splashPlaying = $state((splashForced || splashFirstRun) && !introReduceMotion);
-
-  function handleSplashComplete(): void {
-    splashPlaying = false;
-    try {
-      localStorage.setItem('ap-splash-seen', '1');
-    } catch {
-      /* 存储不可用时静默跳过 */
-    }
-  }
 
   function handleIntroComplete(): void {
     introPlaying = false;
@@ -3253,9 +3230,6 @@
 
   {#if introPlaying}
     <IntroLayer onComplete={handleIntroComplete} />
-  {/if}
-  {#if splashPlaying}
-    <VideoSplashLayer onComplete={handleSplashComplete} />
   {/if}
 </div>
 

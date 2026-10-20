@@ -22,6 +22,7 @@ mod speech_recognizer;
 mod sqlite_workbench;
 mod stored_config;
 mod terminal_exec;
+mod titlebar;
 pub mod workspace;
 mod workspace_list;
 
@@ -669,6 +670,11 @@ pub fn run() {
             });
 
             // 主窗口由 tauri.conf.json 声明 (app.windows[0] label=main), 这里不再重复创建.
+            // 标题栏: 系统强调色 (本机 #A1A1A1) 只该出现在别处 — 把未选中态那一档
+            // 深灰钉死在前台态, 前后台同色 (见 titlebar 模块头注释).
+            if let Some(window) = app.get_webview_window("main") {
+                titlebar::apply_dark_caption(&window);
+            }
 
             // 快捷窗 (启动预建、初始隐藏; 托盘「快捷窗口」新开/唤起/关闭)
             let _ = build_quick_window(app.handle(), false);

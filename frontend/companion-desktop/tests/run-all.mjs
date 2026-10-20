@@ -76,7 +76,6 @@ const SUITES = [
   {file: 'daemon-ops.mjs', name: 'daemon ops card (status read / resident probe map / guidance commands / zero-install boundary, real modules)', strip: true},
   {file: 'theme-bubble-contrast.mjs', name: 'user bubble contrast sentinel (starship fix / default zero-regression, source mirror)'},
   {file: 'pet-default-off.mjs', name: 'pet default off (pref gate / leeway gate / settings switch, source mirror)'},
-  {file: 'video-splash.mjs', name: 'video splash layer wiring (AI WebM intro, source mirror)'},
   {file: 'switch-scope-copy.mjs', name: 'file-write gate full-scope copy (capdef desc / env note / user manual, source mirror)'},
   {file: 'switch-power-audit.mjs', name: 'capability switch power audit table (filed rows / dispositions, source mirror)'},
   {file: 'pending-approval-marker.mjs', name: 'pending approval card marker chain (tool-generic 等待批准 frame, source mirror)'},
